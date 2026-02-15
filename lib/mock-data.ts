@@ -195,12 +195,71 @@ export function getReservationById(id: string): ReservationDetail | null {
   return reservations.find((r) => String(r.id) === String(id)) ?? null;
 }
 
+export function patchReservation(
+  id: string,
+  input: Partial<ReservationDetail>,
+): ReservationDetail | null {
+  const index = reservations.findIndex((r) => String(r.id) === String(id));
+  if (index < 0) return null;
+
+  const current = reservations[index];
+  const updated: ReservationDetail = {
+    ...current,
+    ...input,
+    id: current.id,
+  };
+  reservations[index] = updated;
+  return updated;
+}
+
+export function deleteReservation(id: string): boolean {
+  const index = reservations.findIndex((r) => String(r.id) === String(id));
+  if (index < 0) return false;
+  reservations.splice(index, 1);
+  return true;
+}
+
 export function listCalls(): CallLogListItem[] {
   return calls;
 }
 
 export function getCallBySid(callSid: string): CallLogDetail | null {
   return calls.find((c) => c.callSid === callSid) ?? null;
+}
+
+export function searchCustomers(query: string) {
+  const q = query.trim().toLowerCase();
+  const byPhone = (value?: string) => (value || "").replace(/\D/g, "");
+  const queryPhone = q.replace(/\D/g, "");
+
+  const map = new Map<string, { id: string; name: string; phone: string; reservations: number }>();
+
+  for (const r of reservations) {
+    const id = `cus_${String(r.id)}`;
+    const name = r.customer_name || "Unknown";
+    const phone = r.customer_phone || "";
+    const existing = map.get(id) || { id, name, phone, reservations: 0 };
+    existing.reservations += 1;
+    map.set(id, existing);
+  }
+
+  const all = [...map.values()];
+  if (!q) return all;
+
+  return all.filter((c) => {
+    const nameMatch = c.name.toLowerCase().includes(q);
+    const phoneMatch = queryPhone.length > 0 && byPhone(c.phone).includes(queryPhone);
+    return nameMatch || phoneMatch;
+  });
+}
+
+export function getCustomerById(id: string) {
+  const all = searchCustomers("");
+  const found = all.find((c) => c.id === id);
+  if (!found) return null;
+
+  const history = reservations.filter((r) => `cus_${String(r.id)}` === id);
+  return { ...found, history };
 }
 
 export function listFaqs(): FaqItem[] {

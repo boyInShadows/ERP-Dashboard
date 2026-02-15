@@ -1,8 +1,8 @@
-import { backendGet } from "@/lib/backend";
+import { apiGet } from "@/lib/api";
 import type { FaqItem } from "@/lib/types";
 
 export default async function FaqsPage() {
-  const faqs = await backendGet<FaqItem[]>("/api/faqs").catch(() => []);
+  const faqs = await apiGet<FaqItem[]>("/api/faqs").catch(() => []);
 
   return (
     <div className="space-y-4">

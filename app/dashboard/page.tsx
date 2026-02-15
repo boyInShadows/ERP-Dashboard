@@ -1,9 +1,9 @@
-import { backendGet } from "@/lib/backend";
+import { apiGet } from "@/lib/api";
 import type { AnalyticsOverview } from "@/lib/types";
 
 export default async function DashboardPage() {
   // Adjust these paths to your backend routes:
-  const overview = await backendGet<AnalyticsOverview>("/api/analytics/overview").catch(() => ({}));
+  const overview = await apiGet<AnalyticsOverview>("/api/analytics/overview").catch(() => ({}));
 
   const cards = [
     { label: "Total Calls", value: overview.total_calls ?? "-" },

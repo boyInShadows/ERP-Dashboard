@@ -1,10 +1,10 @@
-import { backendGet } from "@/lib/backend";
+import { apiGet } from "@/lib/api";
 import type { CallLogDetail } from "@/lib/types";
 
 export default async function CallDetailPage({ params }: { params: { callSid: string } }) {
   const callSid = params.callSid;
   // Adjust to match your backend
-  const c = await backendGet<CallLogDetail>(`/api/calls/${callSid}`);
+  const c = await apiGet<CallLogDetail>(`/api/calls/${callSid}`);
 
   return (
     <div className="space-y-4">

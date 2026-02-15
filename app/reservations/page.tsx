@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { backendGet } from "@/lib/backend";
+import { apiGet } from "@/lib/api";
 import type { ReservationListItem } from "@/lib/types";
 
 export default async function ReservationsPage() {
   // Adjust path to match your backend
-  const rows = await backendGet<ReservationListItem[]>("/api/reservations").catch(() => []);
+  const rows = await apiGet<ReservationListItem[]>("/api/reservations").catch(() => []);
 
   return (
     <div className="space-y-4">

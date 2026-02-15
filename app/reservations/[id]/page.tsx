@@ -1,10 +1,10 @@
-import { backendGet } from "@/lib/backend";
+import { apiGet } from "@/lib/api";
 import type { ReservationDetail } from "@/lib/types";
 
 export default async function ReservationDetailPage({ params }: { params: { id: string } }) {
   const id = params.id;
   // Adjust path to match your backend
-  const r = await backendGet<ReservationDetail>(`/api/reservations/${id}`);
+  const r = await apiGet<ReservationDetail>(`/api/reservations/${id}`);
 
   return (
     <div className="space-y-4">

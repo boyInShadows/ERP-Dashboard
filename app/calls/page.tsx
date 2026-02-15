@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { backendGet } from "@/lib/backend";
+import { apiGet } from "@/lib/api";
 import type { CallLogListItem } from "@/lib/types";
 
 export default async function CallsPage() {
   // Adjust to match your backend
-  const rows = await backendGet<CallLogListItem[]>("/api/calls").catch(() => []);
+  const rows = await apiGet<CallLogListItem[]>("/api/calls").catch(() => []);
 
   return (
     <div className="space-y-4">

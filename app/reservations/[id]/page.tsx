@@ -11,7 +11,7 @@ export default async function ReservationDetailPage({ params }: { params: { id: 
       <h1 className="text-xl font-semibold">Reservation #{id}</h1>
 
       <div className="border rounded p-4 grid md:grid-cols-2 gap-3 text-sm">
-        <div><span className="text-gray-500">Date/Time:</span> {r.datetime ?? `${r.date ?? ""} ${r.time ?? ""}`.trim() || "-"}</div>
+        <div><span className="text-gray-500">Date/Time:</span> {r.datetime ?? (`${r.date ?? ""} ${r.time ?? ""}`.trim() || "-")}</div>
         <div><span className="text-gray-500">Status:</span> {r.status ?? "-"}</div>
         <div><span className="text-gray-500">Customer:</span> {r.customer_name ?? "-"}</div>
         <div><span className="text-gray-500">Phone:</span> {r.customer_phone ?? "-"}</div>

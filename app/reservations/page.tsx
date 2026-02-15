@@ -26,7 +26,7 @@ export default async function ReservationsPage() {
               <tr key={String(r.id)} className="border-t hover:bg-gray-50">
                 <td className="p-2">
                   <Link className="underline" href={`/reservations/${r.id}`}>
-                    {r.datetime ?? `${r.date ?? ""} ${r.time ?? ""}`.trim() || "-"}
+                    {r.datetime ?? (`${r.date ?? ""} ${r.time ?? ""}`.trim() || "-")}
                   </Link>
                 </td>
                 <td className="p-2">{r.customer_name ?? "-"} {r.customer_phone ? `(${r.customer_phone})` : ""}</td>
